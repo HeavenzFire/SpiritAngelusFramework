@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HeavenzFire/SpiritAngelusFramework/blob/main/schema/hfai-handoff-v1.schema.json",
+  "title": "HeavenzFire Cross-AI Handoff v1",
+  "description": "Portable, user-controlled context envelope; does not itself authorize access.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "source_platform",
+    "conversation_reference",
+    "objective",
+    "decisions",
+    "task_status",
+    "artifacts",
+    "test_results",
+    "next_actions",
+    "permissions",
+    "timestamp"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "source_platform": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "conversation_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri-reference",
+      "maxLength": 2048
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 5000
+      }
+    },
+    "task_status": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "in_progress",
+        "blocked",
+        "complete",
+        "unknown"
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "reference"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "media_type": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          }
+        }
+      }
+    },
+    "test_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "status"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "passed",
+              "failed",
+              "not_run",
+              "blocked"
+            ]
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 5000
+          }
+        }
+      }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2000
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sharing",
+        "external_fetch",
+        "execution"
+      ],
+      "properties": {
+        "sharing": {
+          "type": "string",
+          "enum": [
+            "private",
+            "explicit_recipients",
+            "public"
+          ]
+        },
+        "external_fetch": {
+          "type": "boolean"
+        },
+        "execution": {
+          "type": "string",
+          "enum": [
+            "none",
+            "local_approved",
+            "scoped_approved"
+          ]
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}
