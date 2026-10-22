@@ -1,0 +1,54 @@
+{
+  "registry_version": "0.1.0",
+  "platform": "chatgpt",
+  "assessed_at": "2026-10-21",
+  "assessment_scope": "This active ChatGPT session and connected tools; not all plans, clients, or future sessions.",
+  "capabilities": {
+    "file_upload_import": {
+      "supported": true,
+      "mechanism": "User uploads a file or pastes JSON into the conversation.",
+      "evidence": "Supported conversation input path; exact source artifact bytes were not attached in this turn."
+    },
+    "file_export": {
+      "supported": true,
+      "mechanism": "Create downloadable files when a file-generation tool is used; repository artifacts can also be published through connected GitHub tools.",
+      "evidence": "GitHub repository write/read operations completed in this session."
+    },
+    "python_execution": {
+      "supported": true,
+      "network_access": false,
+      "mechanism": "Python execution sandbox; do not assume outbound network access."
+    },
+    "web_search": {
+      "supported": true,
+      "mechanism": "Separate web search tool; this does not grant network access to Python sandbox."
+    },
+    "github_repository_read_write": {
+      "supported": true,
+      "mechanism": "Connected GitHub integration; writes require tool permissions and are confirmed by returned commit SHA."
+    },
+    "private_share_url_fetch": {
+      "supported": false,
+      "mechanism": "A pasted ChatGPT share URL does not grant access to private or expired conversation content."
+    },
+    "cross_platform_private_api_access": {
+      "supported": false,
+      "mechanism": "No direct private API access to Meta AI, Gemini, or Claude from this session."
+    },
+    "other_ai_ui_automation": {
+      "supported": false,
+      "mechanism": "Not established for this session; do not claim control of another AI platform's UI."
+    },
+    "remote_task_execution": {
+      "supported": false,
+      "mechanism": "No remote execution is implied by this capability record; local or connected execution requires a specific authorized tool."
+    }
+  },
+  "routing_policy": {
+    "preferred_interchange": "versioned JSON file",
+    "require_artifact_hashes_when_bytes_available": true,
+    "never_infer_access_from_share_url": true,
+    "require_evidence_for_success_claims": true,
+    "require_explicit_authorization_for_sensitive_actions": true
+  }
+}
